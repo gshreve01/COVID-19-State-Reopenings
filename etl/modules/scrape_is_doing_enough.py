@@ -27,6 +27,9 @@ def init_browser():
 
 # Gets the state abbreviation given the starting state div
 
+def get_state(state_div):
+    state_name_div = state_div.find("div", {"class": "g-name"})
+    return state_name_div.text
 
 def get_state_abbreviation(state_div):
     return state_div['data-state']
@@ -89,6 +92,7 @@ def get_states(browser):
     state_info_list = []
     for state in states:
         state_info = {}
+        state_info['state'] = get_state(state)
         state_info['state_abbr'] = get_state_abbreviation(state)
         state_info['economy_state'] = get_economy_state(state)
         # may not have a stay at home order...handle as part of exception handling
