@@ -92,6 +92,8 @@ statedailydata.drop(columns = ["state_abbr","State"], inplace=True)
 statedailydata
 
 state_table = df4[["STATE","state","state_abbr"]]
+us_entry =  pd.DataFrame([{"STATE": "999", "state": "United States", "state_abbr": "US"}])
+state_table = pd.concat([state_table,us_entry]).reset_index(drop=True)
 state_table.head()
 
 def save_to_csv(df,filename):

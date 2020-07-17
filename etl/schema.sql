@@ -1,11 +1,14 @@
---
--- PostgreSQL database dump
---
+-- Database: Covid1
 
--- Dumped from database version 12.3
--- Dumped by pg_dump version 12.3
 
--- Started on 2020-07-15 21:15:22
+--CREATE DATABASE "Covid19"
+--   WITH 
+--    OWNER = postgres
+--    ENCODING = 'UTF8'
+--    LC_COLLATE = 'English_United States.1252'
+--    LC_CTYPE = 'English_United States.1252'
+--    TABLESPACE = pg_default
+--    CONNECTION LIMIT = -1;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
