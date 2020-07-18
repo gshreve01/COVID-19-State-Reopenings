@@ -1,0 +1,40 @@
+h5.news {
+    text-align: left;
+}
+
+img.featured {
+    max-width: 100%;
+    height: auto;
+}
+
+.media-body {
+    width:30em;
+}
+
+table.mostchanged {
+    border: 1px solid black;
+    font-size: 1.5em;
+    align-self: center;
+    padding: 0.5em;
+    width: 25em;
+     margin: auto; 
+}
+
+tr.main:nth-child(even) {background-color: #f2f2f2;}
+tr.main:nth-child(odd) {background-color:lightblue;}
+
+td.mylabel {
+    font-weight: 600;
+    min-width: 7em;
+    text-align: left;
+}
+
+td.myvalue {
+    min-width: 5em;
+    text-align: right;
+}
+
+td {
+    padding: .25em;
+
+}

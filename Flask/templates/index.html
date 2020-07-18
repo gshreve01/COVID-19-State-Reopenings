@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Covid19 - A Study In Hotspots</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/styles/style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="jumbotron text-center">
+      <h1>Covid19 Reopening and Hotspots</h1>
+    </div>
+
+    <!--  -->
+    <div class="row" id="most-changed">
+      <div class="col-md-12">
+        <div class="media">
+          <div class="media-body">
+            <h3>The state with the highest positivity rate increase</h3>
+            <p>
+              <table class="mostchanged">
+                <tr class="main">
+                  <td class="mylabel">State</td><td class="myvalue">{{index_data.most_changed.name}}</td>
+                </tr>
+                <tr class="main">
+                  <td class="mylabel">Date</td><td class="myvalue">{{index_data.most_changed.date}}</td>
+                </tr>
+                <tr class="main">
+                  <td class="mylabel">Positive Test Rate Increase</td><td class="myvalue">{{index_data.most_changed.positiveincrease }}</td>
+                </tr>
+                <tr class="main">
+                  <td class="mylabel">New Tests</td><td class="myvalue">{{index_data.most_changed.newtests}}</td>
+                </tr>
+                <tr class="main">
+                  <td class="mylabel">New Deaths</td><td class="myvalue">{{index_data.most_changed.newdeaths}}</td>
+                </tr>
+              </table>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
