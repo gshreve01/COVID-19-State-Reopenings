@@ -20,11 +20,11 @@ def loadCurrentTestingDF():
     dfCovidTesting = dfCovidTesting.rename(columns = {"State": "CovidTestingState"
             ,"Daily_Tests_Per_100,000": "DailyTestPer100K"
             ,"Percentage_Testing_Target": "PercentageOfTestingTarget"
-            ,"Postive_Test_Rate": "PositivityTestRage"
+            ,"Postive_Test_Rate": "PositivityTestRate"
             ,"Hospitalized Per 100,000":  "HospitalizedPer100K"})
 
     # remove the percent....the database will just treat it as a whole number
-    dfCovidTesting["PercentageOfTestingTarget"] = dfCovidTesting["PercentageOfTestingTarget"].str.replace('%', '')
+    dfCovidTesting["PositivityTestRate"] = dfCovidTesting["PositivityTestRate"].str.replace('%', '')
     print(dfCovidTesting)
     return dfCovidTesting
 
@@ -42,7 +42,7 @@ dfState = loadStateDF()
 dfMerge = dfCovidTesting.merge(dfState, how = 'inner', left_on = "CovidTestingState", right_on = "state")
 print(dfMerge)
 dfMerge = dfMerge.rename(columns = {"STATE": "GeoCodeID"})
-dfMergedCovidTesting = dfMerge[["GeoCodeID", "DailyTestPer100K", "PercentageOfTestingTarget", "PositivityTestRage", "HospitalizedPer100K"]]
+dfMergedCovidTesting = dfMerge[["GeoCodeID", "DailyTestPer100K", "PercentageOfTestingTarget", "PositivityTestRate", "HospitalizedPer100K"]]
 print(dfMergedCovidTesting)
 
 save_to_csv(dfMergedCovidTesting,"CurrentTesting.clean")

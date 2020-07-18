@@ -1,4 +1,4 @@
-State,"Daily_Tests_Per_100,000",Percentage_Testing_Target,Postive_Test_Rate,"Hospitalized Per 100,000"
+State,"Daily_Tests_Per_100,000",Postive_Test_Rate,Percentage_Testing_Target,"Hospitalized Per 100,000"
 United States,206,8%,36,14
 Arizona,186,26%,10,45
 Florida,246,19%,15,35

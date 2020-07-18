@@ -75,7 +75,7 @@ def get_category_businesses(state_div, category_parent_class):
 
 def save_to_csv(states):
     path = os.path.dirname(__file__)
-    df_csv = f"{path}/../data/covid_opening_data.csv"
+    df_csv = f"{path}/../data/covidopeningdata.csv"
     df = pd.DataFrame(states)
     df.to_csv(df_csv, index=False)
 

@@ -5,7 +5,7 @@ import requests
 
 def save_to_csv(df):
     path = os.path.dirname(__file__)
-    df_csv = f"{path}/../data/state_population.csv"
+    df_csv = f"{path}/../data/statepopulation.csv"
     df.to_csv(df_csv, index=False)
 
 url = "https://api.census.gov/data/2019/pep/population?get=DATE_CODE,DENSITY,POP,NAME,STATE&DATE_CODE=12&for=state:*"

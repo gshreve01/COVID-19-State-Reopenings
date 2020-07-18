@@ -1,5 +1,5 @@
 id,state
-1,Reopened
-2,Forward
-3,Pausing
-4,Reversing
+1,REOPENED
+2,FORWARD
+3,PAUSING
+4,REVERSING

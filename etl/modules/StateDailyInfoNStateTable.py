@@ -80,7 +80,7 @@ state_daily_data.head()
 df2 = pd.read_csv(get_csv("covid_opening_data"))
 print(df2)
 
-df3 = pd.read_csv(get_csv("state_population"))
+df3 = pd.read_csv(get_csv("statepopulation"))
 df4= df3.merge(df2, how = 'inner', left_on = "NAME", right_on = "state")
 state_geo = df4[["STATE","state_abbr"]]
 statedailydata= state_geo.merge(state_daily_data, how = 'inner', left_on = "state_abbr", right_on = "State")
@@ -92,7 +92,7 @@ statedailydata.drop(columns = ["state_abbr","State"], inplace=True)
 statedailydata
 
 state_table = df4[["STATE","state","state_abbr"]]
-us_entry =  pd.DataFrame([{"STATE": "999", "state": "United States", "state_abbr": "US"}])
+us_entry =  pd.DataFrame([{"STATE": "99", "state": "United States", "state_abbr": "US"}])
 state_table = pd.concat([state_table,us_entry]).reset_index(drop=True)
 state_table.head()
 
