@@ -7,6 +7,12 @@ img.featured {
     height: auto;
 }
 
+#map,
+body,
+html {
+  height: 100%;
+}
+
 .media-body {
     width:30em;
 }
