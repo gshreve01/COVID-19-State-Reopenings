@@ -2,9 +2,10 @@ console.log('starting choreplethmap');
 
 // Need to convert the data to javascript array
 console.log('rows', rows)
-console.log('JSON rows', JSON.parse(rows))
-var repositoryDataArray = JSON.parse(rows)
-console.log(repositoryDataArray)
+// rows = rows.replace("\\\n", "\n").replace("\"", "'")
+// console.log('JSON rows', JSON.parse(rows))
+var repositoryDataArray = rows;
+console.log(repositoryDataArray);
 
 var mapData = {};
 function loadStatesData() {
@@ -27,7 +28,7 @@ function loadStatesMap() {
   var myMap = L.map('map').setView([37.8, -96], 5);
 
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: '© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>',
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,

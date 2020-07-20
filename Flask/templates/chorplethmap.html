@@ -28,8 +28,9 @@
 
     <!-- JS Template-->
     <script type="text/javascript">
-      
-        var rows = "{{map_data['rows']}}";
+      {% autoescape off %}
+        var rows = {{map_data["rows"]}};
+      {% endautoescape %}
       
     </script>
     <!-- API key -->

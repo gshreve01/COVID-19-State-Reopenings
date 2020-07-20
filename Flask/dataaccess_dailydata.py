@@ -30,19 +30,18 @@ join state s on s.geocodeid = t1.geocodeid"""
     print(table)
     return table
 
-def convertRowProxyToDictionaryList(result):
-    excludeColumns = ['openbusinesses']
+def convertRowProxyToDictionaryList(result, excludedColumns):
     rows = []
     for v in result:
         rowEntry = {}
         for column, value in v.items():
-            if column != 'openbusinesses' and column != 'closedbusinesses':
-                rowEntry[column] = value
+            if not column in excludedColumns:
+                rowEntry[column] = str(value)
         rows.append(rowEntry)
     return rows
 
 def loadLatestData(engine):
-
+    excludeColumns = ['openbusinesses', 'closedbusinesses', 'date']
     # This should be put in separate file
     statement = """\
 select *
@@ -52,7 +51,7 @@ from vlatestdatecoviddata;"""
     rows = []
     with engine.connect() as conn:
         result = conn.execute(statement)
-        rows = convertRowProxyToDictionaryList(result)
+        rows = convertRowProxyToDictionaryList(result, excludeColumns)
     print(rows)
     # # response = jsonify({'result': [dict(row) for row in rs]})
     # print(jsonify({'result': [dict(row) for row in result]}))
@@ -60,10 +59,13 @@ from vlatestdatecoviddata;"""
     # response = jsonify(rows)
     # print(response)
     # return rows
-    return json.dumps(rows,
+    jsonData = json.dumps(rows,
                         sort_keys=True,
-                        indent=1,
-                        default = default)
+                        indent=4,
+                        default=str)
+    # jsonData = jsonData.replace("\"","'")
+    # jsonData = jsonData.replace("\n", "\\\n")
+    return jsonData
 
     
 def default(o):
