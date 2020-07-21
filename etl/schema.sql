@@ -5,7 +5,7 @@
 -- Dumped from database version 12.3
 -- Dumped by pg_dump version 12.3
 
--- Started on 2020-07-17 20:54:42
+-- Started on 2020-07-20 21:37:57
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 202 (class 1259 OID 16536)
+-- TOC entry 208 (class 1259 OID 16536)
 -- Name: censusdata; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -37,7 +37,7 @@ CREATE TABLE public.censusdata (
 ALTER TABLE public.censusdata OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 16539)
+-- TOC entry 209 (class 1259 OID 16539)
 -- Name: coronavirustesting; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -53,7 +53,7 @@ CREATE TABLE public.coronavirustesting (
 ALTER TABLE public.coronavirustesting OWNER TO postgres;
 
 --
--- TOC entry 210 (class 1259 OID 16653)
+-- TOC entry 216 (class 1259 OID 16653)
 -- Name: dailydata; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -84,7 +84,7 @@ CREATE TABLE public.dailydata (
 ALTER TABLE public.dailydata OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 16545)
+-- TOC entry 210 (class 1259 OID 16545)
 -- Name: economystate; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -97,7 +97,7 @@ CREATE TABLE public.economystate (
 ALTER TABLE public.economystate OWNER TO postgres;
 
 --
--- TOC entry 205 (class 1259 OID 16548)
+-- TOC entry 211 (class 1259 OID 16548)
 -- Name: event; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -110,7 +110,7 @@ CREATE TABLE public.event (
 ALTER TABLE public.event OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 16551)
+-- TOC entry 212 (class 1259 OID 16551)
 -- Name: eventdate; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -123,7 +123,22 @@ CREATE TABLE public.eventdate (
 ALTER TABLE public.eventdate OWNER TO postgres;
 
 --
--- TOC entry 207 (class 1259 OID 16554)
+-- TOC entry 219 (class 1259 OID 16768)
+-- Name: gradeeffdt; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gradeeffdt (
+    state character varying(28) NOT NULL,
+    grade character varying(3),
+    stayathomedeclaredate date,
+    stayathomestartdate date
+);
+
+
+ALTER TABLE public.gradeeffdt OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16554)
 -- Name: state; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -137,7 +152,7 @@ CREATE TABLE public.state (
 ALTER TABLE public.state OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 16638)
+-- TOC entry 215 (class 1259 OID 16638)
 -- Name: statereopening; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -154,7 +169,7 @@ CREATE TABLE public.statereopening (
 ALTER TABLE public.statereopening OWNER TO postgres;
 
 --
--- TOC entry 208 (class 1259 OID 16620)
+-- TOC entry 214 (class 1259 OID 16620)
 -- Name: vcensusdata; Type: VIEW; Schema: public; Owner: postgres
 --
 
@@ -179,14 +194,14 @@ CREATE VIEW public.vcensusdata AS
 ALTER TABLE public.vcensusdata OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 16664)
+-- TOC entry 217 (class 1259 OID 16707)
 -- Name: vcompletecoviddata; Type: VIEW; Schema: public; Owner: postgres
 --
 
 CREATE VIEW public.vcompletecoviddata AS
  SELECT t1.geocodeid,
-    t1.name,
-    t1.abbreviation,
+    t1.name AS state,
+    t1.abbreviation AS stateabbr,
     t2.date,
     t2.positive,
     t2.negative,
@@ -227,7 +242,85 @@ CREATE VIEW public.vcompletecoviddata AS
 ALTER TABLE public.vcompletecoviddata OWNER TO postgres;
 
 --
--- TOC entry 2723 (class 2606 OID 16564)
+-- TOC entry 218 (class 1259 OID 16747)
+-- Name: vlatestdatecoviddata; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.vlatestdatecoviddata AS
+ SELECT t1.geocodeid,
+    t1.name AS state,
+    t1.abbreviation AS stateabbr,
+    t2.date,
+    t2.positive,
+    t2.negative,
+    t2.hospitalizedcurrently,
+    t2.hospitalizedcumulative,
+    t2.inicucurrently,
+    t2.inicucumulative,
+    t2.onventilatorcurrently,
+    t2.onventilatorcumulative,
+    t2.recovered,
+    t2.death,
+    t2.deathconfirmed,
+    t2.deathprobable,
+    t2.positiveincrease,
+    t2.negativeincrease,
+    t2.totaltests,
+    t2.newtests,
+    t2.newdeaths,
+    t2.newhospitalizations,
+    t3.population,
+    t3.density,
+    t4.economystateid,
+    t4.stayathomeexpiredate,
+    t4.openbusinesses,
+    t4.closedbusinesses,
+    t4.hasstayathomeorder,
+    t5.percentageoftestingtarget,
+    t5.positivitytestrate,
+    (((t5.positivitytestrate)::character varying(5))::text || '%'::text) AS positivitytastratelabel,
+    t5.hospitalizedper100k,
+    t5.dailytestsper100k
+   FROM ((((public.state t1
+     JOIN public.dailydata t2 ON ((t2.geocodeid = t1.geocodeid)))
+     LEFT JOIN public.censusdata t3 ON ((t3.geocodeid = t1.geocodeid)))
+     LEFT JOIN public.statereopening t4 ON ((t4.geocodeid = t1.geocodeid)))
+     LEFT JOIN public.coronavirustesting t5 ON ((t5.geocodeid = t1.geocodeid)))
+  WHERE (t2.date IN ( SELECT max(dailydata.date) AS max
+           FROM public.dailydata));
+
+
+ALTER TABLE public.vlatestdatecoviddata OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16771)
+-- Name: vstatereopening; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.vstatereopening AS
+ SELECT s.name,
+    g.stayathomedeclaredate,
+    g.stayathomestartdate,
+    o.stayathomeexpiredate,
+    g.grade,
+    es.state,
+        CASE
+            WHEN ((o.closedbusinesses)::text ~~ '%bars%'::text) THEN 1
+            WHEN ((o.closedbusinesses)::text ~~ '%Bars%'::text) THEN 1
+            WHEN ((o.closedbusinesses)::text ~~ '%Nightclubs%'::text) THEN 1
+            WHEN ((o.closedbusinesses)::text ~~ '%Breweries%'::text) THEN 1
+            ELSE 0
+        END AS barsclosed
+   FROM (((public.statereopening o
+     JOIN public.state s ON ((o.geocodeid = s.geocodeid)))
+     JOIN public.gradeeffdt g ON (((g.state)::text = (s.name)::text)))
+     JOIN public.economystate es ON ((es.id = o.economystateid)));
+
+
+ALTER TABLE public.vstatereopening OWNER TO postgres;
+
+--
+-- TOC entry 2741 (class 2606 OID 16564)
 -- Name: censusdata censusdata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -236,7 +329,7 @@ ALTER TABLE ONLY public.censusdata
 
 
 --
--- TOC entry 2725 (class 2606 OID 16566)
+-- TOC entry 2743 (class 2606 OID 16566)
 -- Name: coronavirustesting coronavirustesting_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -245,7 +338,7 @@ ALTER TABLE ONLY public.coronavirustesting
 
 
 --
--- TOC entry 2737 (class 2606 OID 16657)
+-- TOC entry 2755 (class 2606 OID 16657)
 -- Name: dailydata dailydata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -254,7 +347,7 @@ ALTER TABLE ONLY public.dailydata
 
 
 --
--- TOC entry 2727 (class 2606 OID 16570)
+-- TOC entry 2745 (class 2606 OID 16570)
 -- Name: economystate economystate_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -263,7 +356,7 @@ ALTER TABLE ONLY public.economystate
 
 
 --
--- TOC entry 2729 (class 2606 OID 16572)
+-- TOC entry 2747 (class 2606 OID 16572)
 -- Name: event event_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -272,7 +365,7 @@ ALTER TABLE ONLY public.event
 
 
 --
--- TOC entry 2731 (class 2606 OID 16574)
+-- TOC entry 2749 (class 2606 OID 16574)
 -- Name: eventdate eventdate_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -281,7 +374,7 @@ ALTER TABLE ONLY public.eventdate
 
 
 --
--- TOC entry 2733 (class 2606 OID 16576)
+-- TOC entry 2751 (class 2606 OID 16576)
 -- Name: state state_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -290,7 +383,7 @@ ALTER TABLE ONLY public.state
 
 
 --
--- TOC entry 2735 (class 2606 OID 16645)
+-- TOC entry 2753 (class 2606 OID 16645)
 -- Name: statereopening statereopening_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -299,7 +392,7 @@ ALTER TABLE ONLY public.statereopening
 
 
 --
--- TOC entry 2738 (class 2606 OID 16579)
+-- TOC entry 2756 (class 2606 OID 16579)
 -- Name: censusdata censusdata_geocodeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -308,7 +401,7 @@ ALTER TABLE ONLY public.censusdata
 
 
 --
--- TOC entry 2739 (class 2606 OID 16584)
+-- TOC entry 2757 (class 2606 OID 16584)
 -- Name: coronavirustesting coronavirustesting_geocodeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -317,7 +410,7 @@ ALTER TABLE ONLY public.coronavirustesting
 
 
 --
--- TOC entry 2742 (class 2606 OID 16658)
+-- TOC entry 2760 (class 2606 OID 16658)
 -- Name: dailydata dailydata_geocodeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -326,7 +419,7 @@ ALTER TABLE ONLY public.dailydata
 
 
 --
--- TOC entry 2740 (class 2606 OID 16594)
+-- TOC entry 2758 (class 2606 OID 16594)
 -- Name: eventdate eventdate_eventid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -335,7 +428,7 @@ ALTER TABLE ONLY public.eventdate
 
 
 --
--- TOC entry 2741 (class 2606 OID 16646)
+-- TOC entry 2759 (class 2606 OID 16646)
 -- Name: statereopening statereopening_geocodeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -343,7 +436,7 @@ ALTER TABLE ONLY public.statereopening
     ADD CONSTRAINT statereopening_geocodeid_fkey FOREIGN KEY (geocodeid) REFERENCES public.state(geocodeid);
 
 
--- Completed on 2020-07-17 20:54:42
+-- Completed on 2020-07-20 21:37:57
 
 --
 -- PostgreSQL database dump complete

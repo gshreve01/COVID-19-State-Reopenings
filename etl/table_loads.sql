@@ -9,6 +9,8 @@ delete from economystate;
 
 delete from dailydata;
 
+delete from gradeeffdt;
+
 delete from State;
 
 COPY State(GeoCodeId,Name,Abbreviation)
@@ -25,6 +27,12 @@ FROM 'C:\Development\CovidProject2\etl\data\censusdata.csv' DELIMITER ',' CSV HE
 
 COPY statereopening(GeoCodeID, EconomyStateID, StayAtHomeExpireDate, OpenBusinesses, ClosedBusinesses, HasStayAtHomeOrder)
 FROM 'C:\Development\CovidProject2\etl\data\CovidOpeningData.clean.csv' DELIMITER ',' CSV HEADER;
+
+COPY gradeeffdt(state,
+	grade,
+	stayathomedeclaredate,
+	stayathomestartdate)
+FROM 'C:\Development\CovidProject2\etl\data\StayatHomeGrades.csv' DELIMITER ',' CSV HEADER;
 
 copy dailydata(geocodeid
 ,date
@@ -59,4 +67,6 @@ select * from censusdata;
 select * from statereopening;
 
 select * from dailydata;
+
+select * from gradeeffdt;
 
