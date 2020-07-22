@@ -13,6 +13,15 @@ accepted_data_points_map = []
 accepted_data_points_map.append({"description": "Positive Increase In Number Of Cases"
                                 , "name": "positiveincrease"})
 
+accepted_data_points_map.append({"description": "New Deaths"
+                                , "name": "newdeaths"})
+
+accepted_data_points_map.append({"description": "In ICU Currently"
+                                , "name": "inicucurrently"})
+
+accepted_data_points_map.append({"description": "On Ventilator Currently"
+                                , "name": "onventilatorcurrently"})
+
 @app.route("/")
 def index():
     index_data = {}
@@ -27,8 +36,13 @@ def heatMap(dataPointName):
 
     selectedItem = next((item for item in accepted_data_points_map if item['name'] == dataPointName), None)
 
-    map_data["datapointname"] = selectedItem["description"]
-    map_data["rows"], map_data["quantiles"] = loadLatestData(engine, dataPointName)
+    map_data["datapointdescription"] = selectedItem["description"]
+    map_data["datapointname"] = selectedItem["name"]
+    rawRows, map_data["rows"], map_data["quantiles"] = loadLatestData(engine, dataPointName)
+
+    # Date is in second element
+    map_data["date"] =rawRows[0]['date'].strftime("%m/%d/%Y")
+    print("date", map_data["date"])
     print("map_data.rows", map_data["rows"])
     return render_template("chorplethmap.html", map_data = map_data)
 

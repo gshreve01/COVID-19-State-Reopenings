@@ -42,7 +42,7 @@ def convertRowProxyToDictionaryList(result, includeColumns):
     return rows
 
 def loadLatestData(engine, dataPointName):
-    includeColumns = ['state', dataPointName]
+    includeColumns = ['state', 'date', dataPointName]
     # This should be put in separate file
     statement = """\
 select *
@@ -76,7 +76,7 @@ from vlatestdatecoviddata;"""
                         sort_keys=True,
                         indent=4,
                         default=str)
-    return jsonDataRows, jsonDataQuantiles
+    return rows, jsonDataRows, jsonDataQuantiles
 
     
 def default(o):

@@ -19,8 +19,8 @@
     <div class="container">
 
         <div class="Covid19Title text-center">
-            <h1>Covid19 Mapping</h1>
-            <h2>{{map_data["datapointname"]}}</h2>
+            <h1>Covid19 Mapping for {{map_data["date"]}}</h1>
+            <h2>{{map_data["datapointdescription"]}}</h2>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -31,15 +31,24 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Filter Search</div>
+                    <div class="panel-heading">Select Map Criteria</div>
                     <div class="panel-body">
                         <form id="form">
-                            <div class="form-group">
-                                <label for="dataType">Select the Type of Data</label>
-                                <select class="form-control" name="dataType-list" id="dataType">
-                                </select>
-                            </div>
-                            <button id="filter-btn" type="button" class="btn btn-default">Apply Selection</button>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="dataType">Select the Type of Data</label>
+                                            <select class="form-control" name="dataType-list" id="dataType">
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button id="filter-btn" type="button" class="btn btn-default">Apply
+                                            Selection</button>
+                                    </td>
+                                </tr>
+                            </table>
                         </form>
                     </div>
                 </div>
@@ -53,6 +62,8 @@
         var rows = {{ map_data["rows"]}};
         var quantiles = {{ map_data["quantiles"]}};
         var dataPointMap = {{ map_data["datapointmap"]}};
+        var datapointName = "{{ map_data['datapointname']}}";
+        var datapointDescription = "{{ map_data['datapointdescription']}}";
         {% endautoescape %}
 
     </script>
