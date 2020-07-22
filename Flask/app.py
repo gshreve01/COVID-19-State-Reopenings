@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
+accepted_data_points_map = {"positiveincrease": "Positive Increase In Number Of Cases"}
 
 @app.route("/")
 def index():
@@ -16,11 +17,13 @@ def index():
     index_data["most_changed"] = loadMostChangedState(engine)
     return render_template("index.html", index_data=index_data)
 
-
-@app.route("/Maps")
-def heatMap():
+@app.route("/Maps/<dataPointName>")
+def heatMap(dataPointName):
+    print(dataPointName)
     map_data = {}
-    map_data["rows"] = loadLatestData(engine)
+    map_data["datapointmap"] = accepted_data_points_map
+    map_data["datapointname"] = accepted_data_points_map[dataPointName]
+    map_data["rows"], map_data["quantiles"] = loadLatestData(engine, dataPointName)
     print("map_data.rows", map_data["rows"])
     return render_template("chorplethmap.html", map_data = map_data)
 

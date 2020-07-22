@@ -7,10 +7,14 @@ img.featured {
     height: auto;
 }
 
-#map,
+/* #map,
 body,
 html {
   height: 100%;
+} */
+
+#map {
+    height: 500px;
 }
 
 .media-body {
@@ -43,4 +47,8 @@ td.myvalue {
 td {
     padding: .25em;
 
+}
+
+div.Covid19Title {
+    background-color: lightgray;
 }
