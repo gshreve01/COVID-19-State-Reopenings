@@ -1,5 +1,32 @@
 console.log('starting choreplethmap');
 
+// Setup Form submit
+var form = d3.select("#form");
+console.log("form", form);
+form.on("submit", runFormSearch);
+
+function runFormSearch() {
+  alert("hi");
+}
+
+// DataType Selection
+console.log("datapointmap", dataPointMap);
+var datatypeSelect = d3.select("#dataType");
+datatypeSelect.on("change", function () {
+  console.log("Entering datatypeSelect on change event");
+  selectedDataType = Array.from(this.options) // create an array from the htmlCollection
+    .filter(function (option) { return option.selected })  // filter for selected values
+    .map(function (option) { return option.value; }); // return a new array with the selected values
+  console.log("selectedDataType", selectedDataType);
+});
+
+console.log("datapointMap.keys", dataPointMap.keys);
+var options = datatypeSelect.selectAll("option").data(dataPointMap).enter().append("option")
+    .text(function (d) { return d.description; })
+    .attr("value", function (d) { return d.name });
+
+console.log("datatypeSelect", datatypeSelect);
+
 // Need to convert the data to javascript array
 console.log('rows', rows)
 // rows = rows.replace("\\\n", "\n").replace("\"", "'")
@@ -8,9 +35,9 @@ var repositoryDataArray = rows;
 console.log(repositoryDataArray);
 
 // sort the quantile values in descending order
-quantiles = quantiles.sort((a,b) => b-a);
+quantiles = quantiles.sort((a, b) => b - a);
 console.log("quantiles", quantiles);
-console.log("datapointmap", dataPointMap);
+
 
 var mapData = {};
 function loadStatesData() {
@@ -34,13 +61,13 @@ function loadStatesData() {
 
 function getColor(d) {
   return d > quantiles[0] ? '#800026' :
-         d > quantiles[1]  ? '#BD0026' :
-         d > quantiles[2]  ? '#E31A1C' :
-         d > quantiles[3]  ? '#FC4E2A' :
-         d > quantiles[4]   ? '#FD8D3C' :
-         d > quantiles[5]   ? '#FEB24C' :
-        //  d > quantiles[6]   ? '#FED976' :
-                    '#FFEDA0';
+    d > quantiles[1] ? '#BD0026' :
+      d > quantiles[2] ? '#E31A1C' :
+        d > quantiles[3] ? '#FC4E2A' :
+          d > quantiles[4] ? '#FD8D3C' :
+            d > quantiles[5] ? '#FEB24C' :
+              //  d > quantiles[6]   ? '#FED976' :
+              '#FFEDA0';
 }
 
 // mode function taken from https://stackoverflow.com/questions/52898456/simplest-way-of-finding-mode-in-javascript
@@ -53,7 +80,7 @@ var mode = a => {
   var currentElem = a[0];
 
   for (let i = 1; i < a.length; i++) {
-    if (a[i-1] !== a[i]) {
+    if (a[i - 1] !== a[i]) {
       if (currentStreak > bestStreak) {
         bestStreak = currentStreak;
         bestElem = currentElem;
@@ -85,16 +112,16 @@ function loadStatesMap() {
   function style(feature) {
     console.log("Setting style");
     return {
-        fillColor: getColor(feature.properties["positiveincrease"]),
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7
+      fillColor: getColor(feature.properties["positiveincrease"]),
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
     };
   }
-  
-  L.geoJson(mapData, {style: style}).addTo(myMap);
+
+  L.geoJson(mapData, { style: style }).addTo(myMap);
 }
 
 
@@ -125,4 +152,3 @@ console.log('finished choreplethmap');
 // the rest of the data
 
 
-        
