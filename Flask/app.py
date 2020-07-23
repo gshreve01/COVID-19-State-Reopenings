@@ -24,10 +24,10 @@ def heatMap():
     print("map_data.rows", map_data["rows"])
     return render_template("chorplethmap.html", map_data = map_data)
 
-@app.route("/Grades")
+@app.route("/BarGraphs")
 def grades():
     grade_data = {}
-    return render_template("bellcurve.html")
+    return render_template("bargraph.html")
 
 if __name__ == "__main__":
     app.run()
