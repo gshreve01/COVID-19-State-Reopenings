@@ -1,3 +1,4 @@
+console.log("Beginning BarGraphsDataRead");
 
 //set up svg using margin conventions - we'll need plenty of room on the left for labels
 var margin = {
@@ -45,7 +46,8 @@ return xAxis;
 }
 var ddata = []
 
-d3.csv("./assets/data/Covid19.csv").then(function(dailyData,err) {
+console.log("d3");
+d3.csv("static/js/data/Covid19.csv").then(function(dailyData,err) {
         if (err) throw err;
         console.log(dailyData)
         dailyData.forEach(function(data) {

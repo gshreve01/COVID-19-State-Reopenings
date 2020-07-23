@@ -21,7 +21,7 @@ function limitstates(){
     // for(i=0;i=length(chosensts); i++){
 
     // }
-    d3.csv("./assets/data/Covid19.csv").then(function(dailyData,err) {
+    d3.csv("../data/Covid19.csv").then(function(dailyData,err) {
         if (err) throw err;
         console.log(dailyData)
         dailyData.forEach(function(data) {
