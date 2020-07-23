@@ -16,7 +16,7 @@ function limitstates(){
         }
     }
     console.log(chosensts)
-    console.log(ddata)
+
     
     // for(i=0;i=length(chosensts); i++){
 
