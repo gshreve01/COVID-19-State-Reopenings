@@ -197,6 +197,24 @@ ALTER TABLE public.vcensusdata OWNER TO postgres;
 -- TOC entry 217 (class 1259 OID 16707)
 -- Name: vcompletecoviddata; Type: VIEW; Schema: public; Owner: postgres
 --
+CREATE VIEW public.vstatereopening AS
+ SELECT s.name,
+    g.stayathomedeclaredate,
+    g.stayathomestartdate,
+    o.stayathomeexpiredate,
+    g.grade,
+    es.state,
+        CASE
+            WHEN ((o.closedbusinesses)::text ~~ '%bars%'::text) THEN 'YES'
+            WHEN ((o.closedbusinesses)::text ~~ '%Bars%'::text) THEN 'YES'
+            WHEN ((o.closedbusinesses)::text ~~ '%Nightclubs%'::text) THEN 'YES'
+            WHEN ((o.closedbusinesses)::text ~~ '%Breweries%'::text) THEN 'YES'
+            ELSE 'NO'
+        END AS barsclosed
+   FROM (((public.statereopening o
+     JOIN public.state s ON ((o.geocodeid = s.geocodeid)))
+     JOIN public.gradeeffdt g ON (((g.state)::text = (s.name)::text)))
+     JOIN public.economystate es ON ((es.id = o.economystateid)));
 
 CREATE VIEW public.vcompletecoviddata AS
  SELECT t1.geocodeid,
@@ -223,11 +241,12 @@ CREATE VIEW public.vcompletecoviddata AS
     t2.newhospitalizations,
     t3.population,
     t3.density,
-    t4.economystateid,
+    t4.stayathomedeclaredate,
+    t4.stayathomestartdate,
     t4.stayathomeexpiredate,
-    t4.openbusinesses,
-    t4.closedbusinesses,
-    t4.hasstayathomeorder,
+    t4.grade,
+    t4.state as economystate,
+	t4.barsclosed,
     t5.percentageoftestingtarget,
     t5.positivitytestrate,
     t5.hospitalizedper100k,
@@ -271,7 +290,7 @@ CREATE VIEW public.vlatestdatecoviddata AS
     t2.newhospitalizations,
     t3.population,
     t3.density,
-    t4.economystateid,
+    t6.state as economystate,
     t4.stayathomeexpiredate,
     t4.openbusinesses,
     t4.closedbusinesses,
@@ -284,8 +303,10 @@ CREATE VIEW public.vlatestdatecoviddata AS
    FROM ((((public.state t1
      JOIN public.dailydata t2 ON ((t2.geocodeid = t1.geocodeid)))
      LEFT JOIN public.censusdata t3 ON ((t3.geocodeid = t1.geocodeid)))
-     LEFT JOIN public.statereopening t4 ON ((t4.geocodeid = t1.geocodeid)))
+     LEFT JOIN public.vstatereopening t4 ON ((t4.geocodeid = t1.geocodeid)))
      LEFT JOIN public.coronavirustesting t5 ON ((t5.geocodeid = t1.geocodeid)))
+	 LEFT JOIN public.economystate t6 ON ((t6.id = t4.economystateid))
+
   WHERE (t2.date IN ( SELECT max(dailydata.date) AS max
            FROM public.dailydata));
 
@@ -297,24 +318,7 @@ ALTER TABLE public.vlatestdatecoviddata OWNER TO postgres;
 -- Name: vstatereopening; Type: VIEW; Schema: public; Owner: postgres
 --
 
-CREATE VIEW public.vstatereopening AS
- SELECT s.name,
-    g.stayathomedeclaredate,
-    g.stayathomestartdate,
-    o.stayathomeexpiredate,
-    g.grade,
-    es.state,
-        CASE
-            WHEN ((o.closedbusinesses)::text ~~ '%bars%'::text) THEN 1
-            WHEN ((o.closedbusinesses)::text ~~ '%Bars%'::text) THEN 1
-            WHEN ((o.closedbusinesses)::text ~~ '%Nightclubs%'::text) THEN 1
-            WHEN ((o.closedbusinesses)::text ~~ '%Breweries%'::text) THEN 1
-            ELSE 0
-        END AS barsclosed
-   FROM (((public.statereopening o
-     JOIN public.state s ON ((o.geocodeid = s.geocodeid)))
-     JOIN public.gradeeffdt g ON (((g.state)::text = (s.name)::text)))
-     JOIN public.economystate es ON ((es.id = o.economystateid)));
+
 
 
 ALTER TABLE public.vstatereopening OWNER TO postgres;
