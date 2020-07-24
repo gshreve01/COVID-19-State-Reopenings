@@ -4,6 +4,7 @@ try:
 except ImportError:
     import json
 import datetime  
+import pandas as pd
 
 def loadMostChangedState(engine):
     # This should be put in separate file
@@ -30,18 +31,18 @@ join state s on s.geocodeid = t1.geocodeid"""
     print(table)
     return table
 
-def convertRowProxyToDictionaryList(result, excludedColumns):
+def convertRowProxyToDictionaryList(result, includeColumns):
     rows = []
     for v in result:
         rowEntry = {}
         for column, value in v.items():
-            if not column in excludedColumns:
-                rowEntry[column] = str(value)
+            if column in includeColumns:
+                rowEntry[column] = value
         rows.append(rowEntry)
     return rows
 
-def loadLatestData(engine):
-    excludeColumns = ['openbusinesses', 'closedbusinesses', 'date']
+def loadLatestData(engine, dataPointName):
+    includeColumns = ['state', 'date', dataPointName]
     # This should be put in separate file
     statement = """\
 select *
@@ -51,21 +52,31 @@ from vlatestdatecoviddata;"""
     rows = []
     with engine.connect() as conn:
         result = conn.execute(statement)
-        rows = convertRowProxyToDictionaryList(result, excludeColumns)
+        rows = convertRowProxyToDictionaryList(result, includeColumns)
     print(rows)
+    df = pd.DataFrame(rows)
+    print(df.describe())
     # # response = jsonify({'result': [dict(row) for row in rs]})
     # print(jsonify({'result': [dict(row) for row in result]}))
     # response = jsonify({'result': [dict(row) for row in rows]})
     # response = jsonify(rows)
     # print(response)
     # return rows
-    jsonData = json.dumps(rows,
+    quantiles = df[dataPointName].quantile([.15, .25, .40, .55, .7, .9])
+    quantiles.columns = ['Percentage', 'TopValue']
+
+    jsonDataRows = json.dumps(rows,
                         sort_keys=True,
                         indent=4,
                         default=str)
     # jsonData = jsonData.replace("\"","'")
     # jsonData = jsonData.replace("\n", "\\\n")
-    return jsonData
+
+    jsonDataQuantiles = json.dumps(quantiles.values.tolist(),
+                        sort_keys=True,
+                        indent=4,
+                        default=str)
+    return rows, jsonDataRows, jsonDataQuantiles
 
     
 def default(o):

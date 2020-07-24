@@ -1,0 +1,5 @@
+EconID,EconState
+1,EconomyState.REOPENED
+2,EconomyState.FORWARD
+3,EconomyState.PAUSING
+4,EconomyState.REVERSING

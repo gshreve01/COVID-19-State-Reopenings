@@ -6,5 +6,3 @@ def GetURIConfig(username, password):
     return f"postgresql://localhost/Covid19?user={username}&password={password}"
 
 SQLALCHEMY_DATABASE_URI = "postgresql://localhost/Covid19?user=Greg&password=chrisin05"
-
-

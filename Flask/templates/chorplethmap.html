@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <!-- <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
-    <title>Covid19 - Color Mapping</title>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Covid19 - A Study In Hotspots</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/styles/style.css">
 
     <!-- Leaflet CSS -->
@@ -16,22 +16,56 @@
 </head>
 
 <body>
-    <!-- <div class="container">
+    <div class="container">
 
-        <div class="jumbotron text-center">
-            <h1>Covid19 Mapping</h1>
+        <div class="Covid19Title text-center">
+            <h1>Covid19 Mapping for {{map_data["date"]}}</h1>
+            <h2>{{map_data["datapointdescription"]}}</h2>
         </div>
-    </div> -->
-
-    <div id="map">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Select Map Criteria</div>
+                    <div class="panel-body">
+                        <form id="form">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="dataType">Select the Type of Data</label>
+                                            <select class="form-control" name="dataType-list" id="dataType">
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button id="filter-btn" type="button" class="btn btn-default">Apply
+                                            Selection</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- JS Template-->
     <script type="text/javascript">
-      {% autoescape off %}
-        var rows = {{map_data["rows"]}};
-      {% endautoescape %}
-      
+        {% autoescape off %}
+        var rows = {{ map_data["rows"]}};
+        var quantiles = {{ map_data["quantiles"]}};
+        var dataPointMap = {{ map_data["datapointmap"]}};
+        var datapointName = "{{ map_data['datapointname']}}";
+        var datapointDescription = "{{ map_data['datapointdescription']}}";
+        {% endautoescape %}
+
     </script>
     <!-- API key -->
     <script type="text/javascript" src="../static/js/config.js"></script>
@@ -53,5 +87,3 @@
 </body>
 
 </html>
-
-
