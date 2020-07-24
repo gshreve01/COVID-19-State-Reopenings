@@ -18,6 +18,12 @@ var svg = d3.select("#scatter").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Append an SVG group
+function newGroup(groupid){
+    var chartGroup = svg.append("g")
+                        // .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                        .attr("id",groupid)
+    return chartGroup
+}
 var chartGroup = svg.append("g")
 .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -36,8 +42,8 @@ function xScale(dailyData, chosenXAxis) {
         // .domain([0, d3.max(dailyData, function (d) {
         //     return d[chosenXAxis];
         // })]);
-        console.log("xlinear")
-        console.log(xLinearScale())
+        // console.log("xlinear")
+        // console.log(xLinearScale())
     return xLinearScale;
 }
 
@@ -61,6 +67,53 @@ function renderAxes(newXScale, xAxis) {
 
     return xAxis;
     }
+// function to make a bars of graph
+
+function createbar(first,sourcedata, cclass, chosenXAxis,color){
+    if(chosenXAxis ==="Pos_Tests"){
+        var diff = "NewPosCases"
+    }
+    else{
+        var diff = "NewDeaths"
+    }
+    var xLinearScale = xScale(sourcedata, chosenXAxis);
+
+    var yOrdinalScale =yScale(sourcedata)
+    if(first === "N"){
+        console.log("erase")
+        var el = document.getElementById(cclass);
+        while (el.firstChild) {
+            console.log("remove")
+            el.removeChild(el.firstChild);
+        }
+    }
+    else{console.log("don't erase")}
+    obj = newGroup(cclass).selectAll("."+ cclass)
+            .remove()
+            .data(sourcedata)
+            .enter()
+            .append("g")
+            .append("rect")
+            .attr("class","bar")
+            .attr("y", function(d){
+                return yOrdinalScale(d.State)
+            })
+            .attr("fill",color)
+            .attr("height", yOrdinalScale.rangeBand())
+            .attr("width",function(d){
+                if(cclass == "prevbars"){
+                    return xLinearScale(d[chosenXAxis]-d[diff])
+                }
+                else{
+                    return xLinearScale(d[chosenXAxis])
+                }
+                
+            });
+			
+	return obj
+}
+
+
 // function used for updating bar graphs group with a transition to
 // new bar
 function rendertotbars(totbars, newXScale, chosenXAxis) {
@@ -77,7 +130,7 @@ function rendertotbars(totbars, newXScale, chosenXAxis) {
 
     return totbars;
 }
-function renderprevbars(prevbars, newXScale, chosenXAxis, newdata) {
+function renderprevbars(prevbars, newXScale, chosenXAxis) {
     if(chosenXAxis ==="Pos_Tests"){
         var diff = "NewPosCases"
     }
@@ -86,7 +139,7 @@ function renderprevbars(prevbars, newXScale, chosenXAxis, newdata) {
     }
     prevbars.transition()
     .duration(1000)
-    .data(newdata)
+    // .data(newdata)
     .attr("width",d => newXScale(d[chosenXAxis]-d[diff]));
 
     return prevbars;
@@ -164,35 +217,35 @@ d3.csv("static/js/data/Covid19.csv").then(function(dailyData,err) {
             .call(yAxis);
 
         console.log(totalDeaths)
-        var totbars = svg.selectAll(".totalbar")
-            .data(filteredData)
-            .enter()
-            .append("g")
-            .append("rect")
-            .attr("class","bar")
-            .attr("y", function(d){
-                return yOrdinalScale(d.State)
-            })
-            .attr("height", yOrdinalScale.rangeBand())
-            .attr("width",function(d){
-                return xLinearScale(d.Pos_Tests)
-            });
-
-
-        var prevbars = svg.selectAll(".prevbar")
-            .data(filteredData)
-            .enter()
-            .append("g")
-            .append("rect")
-            .attr("class","bar")
-            .attr("y", function(d){
-                return yOrdinalScale(d.State)
-            })
-            .attr("fill","red")
-            .attr("height", yOrdinalScale.rangeBand())
-            .attr("width",function(d){
-                return xLinearScale(d.Pos_Tests-d.NewPosCases)
-            });
+        // var totbars = svg.selectAll(".totalbar")
+        //     .data(filteredData)
+        //     .enter()
+        //     .append("g")
+        //     .append("rect")
+        //     .attr("class","bar")
+        //     .attr("y", function(d){
+        //         return yOrdinalScale(d.State)
+        //     })
+        //     .attr("height", yOrdinalScale.rangeBand())
+        //     .attr("width",function(d){
+        //         return xLinearScale(d.Pos_Tests)
+        //     });
+        createbar("Y",filteredData,"totalbar",chosenXAxis,"green")
+        createbar("Y",filteredData,"prevbars",chosenXAxis,"red")
+        // var prevbars = svg.selectAll('.'+hey )
+        //     .data(filteredData)
+        //     .enter()
+        //     .append("g")
+        //     .append("rect")
+        //     .attr("class","bar")
+        //     .attr("y", function(d){
+        //         return yOrdinalScale(d.State)
+        //     })
+        //     .attr("fill","red")
+        //     .attr("height", yOrdinalScale.rangeBand())
+        //     .attr("width",function(d){
+        //         return xLinearScale(d.Pos_Tests-d.NewPosCases)
+        //     });
         
         //Append initial total bars
         // totbars
@@ -259,14 +312,14 @@ d3.csv("static/js/data/Covid19.csv").then(function(dailyData,err) {
 
             // updates x axis with transition
             xAxis = renderAxes(xLinearScale, xAxis);
-                console.log(totbars)
-                console.log(xLinearScale)
-                console.log(chosenXAxis)
+                // console.log(totbars)
+                // console.log(xLinearScale)
+                // console.log(chosenXAxis)
             // updates circles with new x values
-            totbars = rendertotbars(totbars, xLinearScale, chosenXAxis);
-
-            prevbars = renderprevbars(prevbars, xLinearScale, chosenXAxis);
-
+            // totbars = rendertotbars(totbars, xLinearScale, chosenXAxis);
+            createbar("N",filteredData,"totalbar",chosenXAxis,"blue")
+            // prevbars = renderprevbars(prevbars, xLinearScale, chosenXAxis);
+            createbar("N",filteredData,"prevbars",chosenXAxis,"red")  
             // updates tooltips with new info
             // totbars = updateToolTip(chosenXAxis,totbars);
 
