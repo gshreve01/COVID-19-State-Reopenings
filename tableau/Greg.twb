@@ -23,31 +23,33 @@
             <connection authentication='username-password' class='postgres' dbname='Covid19' odbc-native-protocol='' one-time-sql='' port='5432' server='localhost' username='Greg' />
           </named-connection>
         </named-connections>
-        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='vcompletecoviddata' table='[public].[vcompletecoviddata]' type='table' />
-        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='vcompletecoviddata' table='[public].[vcompletecoviddata]' type='table' />
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='veventrelatedcoviddata' table='[public].[veventrelatedcoviddata]' type='table' />
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='veventrelatedcoviddata' table='[public].[veventrelatedcoviddata]' type='table' />
         <metadata-records>
           <metadata-record class='column'>
-            <remote-name>geocodeid</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[geocodeid]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>geocodeid</remote-alias>
+            <remote-name>eventname</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[eventname]</local-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
+            <remote-alias>eventname</remote-alias>
             <ordinal>1</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>50</width>
             <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
             <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>state</remote-name>
             <remote-type>130</remote-type>
             <local-name>[state]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>state</remote-alias>
             <ordinal>2</ordinal>
             <local-type>string</local-type>
@@ -60,32 +62,30 @@
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
               <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
-            <remote-name>stateabbr</remote-name>
-            <remote-type>130</remote-type>
-            <local-name>[stateabbr]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>stateabbr</remote-alias>
+            <remote-name>geocodeid</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[geocodeid]</local-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
+            <remote-alias>geocodeid</remote-alias>
             <ordinal>3</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <width>2</width>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
             <contains-null>true</contains-null>
-            <padded-semantics>true</padded-semantics>
-            <collation flag='0' name='LEN_RUS' />
             <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>date</remote-name>
             <remote-type>7</remote-type>
             <local-name>[date]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>date</remote-alias>
             <ordinal>4</ordinal>
             <local-type>date</local-type>
@@ -95,13 +95,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_TYPE_DATE&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_TYPE_DATE&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>positive</remote-name>
             <remote-type>3</remote-type>
             <local-name>[positive]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>positive</remote-alias>
             <ordinal>5</ordinal>
             <local-type>integer</local-type>
@@ -112,13 +112,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>negative</remote-name>
             <remote-type>3</remote-type>
             <local-name>[negative]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>negative</remote-alias>
             <ordinal>6</ordinal>
             <local-type>integer</local-type>
@@ -129,13 +129,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>hospitalizedcurrently</remote-name>
             <remote-type>3</remote-type>
             <local-name>[hospitalizedcurrently]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>hospitalizedcurrently</remote-alias>
             <ordinal>7</ordinal>
             <local-type>integer</local-type>
@@ -146,13 +146,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>hospitalizedcumulative</remote-name>
             <remote-type>3</remote-type>
             <local-name>[hospitalizedcumulative]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>hospitalizedcumulative</remote-alias>
             <ordinal>8</ordinal>
             <local-type>integer</local-type>
@@ -163,13 +163,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>inicucurrently</remote-name>
             <remote-type>3</remote-type>
             <local-name>[inicucurrently]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>inicucurrently</remote-alias>
             <ordinal>9</ordinal>
             <local-type>integer</local-type>
@@ -180,13 +180,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>inicucumulative</remote-name>
             <remote-type>3</remote-type>
             <local-name>[inicucumulative]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>inicucumulative</remote-alias>
             <ordinal>10</ordinal>
             <local-type>integer</local-type>
@@ -197,13 +197,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>onventilatorcurrently</remote-name>
             <remote-type>3</remote-type>
             <local-name>[onventilatorcurrently]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>onventilatorcurrently</remote-alias>
             <ordinal>11</ordinal>
             <local-type>integer</local-type>
@@ -214,13 +214,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>onventilatorcumulative</remote-name>
             <remote-type>3</remote-type>
             <local-name>[onventilatorcumulative]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>onventilatorcumulative</remote-alias>
             <ordinal>12</ordinal>
             <local-type>integer</local-type>
@@ -231,13 +231,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>recovered</remote-name>
             <remote-type>3</remote-type>
             <local-name>[recovered]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>recovered</remote-alias>
             <ordinal>13</ordinal>
             <local-type>integer</local-type>
@@ -248,13 +248,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>death</remote-name>
             <remote-type>3</remote-type>
             <local-name>[death]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>death</remote-alias>
             <ordinal>14</ordinal>
             <local-type>integer</local-type>
@@ -265,13 +265,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>deathconfirmed</remote-name>
             <remote-type>3</remote-type>
             <local-name>[deathconfirmed]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>deathconfirmed</remote-alias>
             <ordinal>15</ordinal>
             <local-type>integer</local-type>
@@ -282,13 +282,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>deathprobable</remote-name>
             <remote-type>3</remote-type>
             <local-name>[deathprobable]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>deathprobable</remote-alias>
             <ordinal>16</ordinal>
             <local-type>integer</local-type>
@@ -299,13 +299,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>positiveincrease</remote-name>
             <remote-type>3</remote-type>
             <local-name>[positiveincrease]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>positiveincrease</remote-alias>
             <ordinal>17</ordinal>
             <local-type>integer</local-type>
@@ -316,13 +316,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>negativeincrease</remote-name>
             <remote-type>3</remote-type>
             <local-name>[negativeincrease]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>negativeincrease</remote-alias>
             <ordinal>18</ordinal>
             <local-type>integer</local-type>
@@ -333,13 +333,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>totaltests</remote-name>
             <remote-type>3</remote-type>
             <local-name>[totaltests]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>totaltests</remote-alias>
             <ordinal>19</ordinal>
             <local-type>integer</local-type>
@@ -350,13 +350,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>newtests</remote-name>
             <remote-type>3</remote-type>
             <local-name>[newtests]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>newtests</remote-alias>
             <ordinal>20</ordinal>
             <local-type>integer</local-type>
@@ -367,13 +367,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>newdeaths</remote-name>
             <remote-type>3</remote-type>
             <local-name>[newdeaths]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>newdeaths</remote-alias>
             <ordinal>21</ordinal>
             <local-type>integer</local-type>
@@ -384,13 +384,13 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>newhospitalizations</remote-name>
             <remote-type>3</remote-type>
             <local-name>[newhospitalizations]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
+            <parent-name>[veventrelatedcoviddata]</parent-name>
             <remote-alias>newhospitalizations</remote-alias>
             <ordinal>22</ordinal>
             <local-type>integer</local-type>
@@ -401,215 +401,20 @@
               <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
               <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
             </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>population</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[population]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>population</remote-alias>
-            <ordinal>23</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>density</remote-name>
-            <remote-type>131</remote-type>
-            <local-name>[density]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>density</remote-alias>
-            <ordinal>24</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>15</precision>
-            <scale>7</scale>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_NUMERIC&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_NUMERIC&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>economystateid</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[economystateid]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>economystateid</remote-alias>
-            <ordinal>25</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>stayathomeexpiredate</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[stayathomeexpiredate]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>stayathomeexpiredate</remote-alias>
-            <ordinal>26</ordinal>
-            <local-type>date</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_TYPE_DATE&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_TYPE_DATE&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>openbusinesses</remote-name>
-            <remote-type>130</remote-type>
-            <local-name>[openbusinesses]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>openbusinesses</remote-alias>
-            <ordinal>27</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <width>3000</width>
-            <contains-null>true</contains-null>
-            <cast-to-local-type>true</cast-to-local-type>
-            <collation flag='0' name='LEN_RUS' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>closedbusinesses</remote-name>
-            <remote-type>130</remote-type>
-            <local-name>[closedbusinesses]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>closedbusinesses</remote-alias>
-            <ordinal>28</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <width>3000</width>
-            <contains-null>true</contains-null>
-            <cast-to-local-type>true</cast-to-local-type>
-            <collation flag='0' name='LEN_RUS' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>hasstayathomeorder</remote-name>
-            <remote-type>11</remote-type>
-            <local-name>[hasstayathomeorder]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>hasstayathomeorder</remote-alias>
-            <ordinal>29</ordinal>
-            <local-type>boolean</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_BIT&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_BIT&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>percentageoftestingtarget</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[percentageoftestingtarget]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>percentageoftestingtarget</remote-alias>
-            <ordinal>30</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>positivitytestrate</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[positivitytestrate]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>positivitytestrate</remote-alias>
-            <ordinal>31</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>hospitalizedper100k</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[hospitalizedper100k]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>hospitalizedper100k</remote-alias>
-            <ordinal>32</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>dailytestsper100k</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[dailytestsper100k]</local-name>
-            <parent-name>[vcompletecoviddata]</parent-name>
-            <remote-alias>dailytestsper100k</remote-alias>
-            <ordinal>33</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <precision>10</precision>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
-              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
-            </attributes>
-            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
-      <_.fcp.ObjectModelTableType.true...column caption='vcompletecoviddata' datatype='table' name='[__tableau_internal_object_id__].[vcompletecoviddata_3F33911F449C4040A1B8741891E378C5]' role='measure' type='quantitative' />
-      <column caption='Closedbusinesses' datatype='string' name='[closedbusinesses]' role='dimension' type='nominal' />
-      <column caption='Dailytestsper100K' datatype='integer' name='[dailytestsper100k]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='veventrelatedcoviddata' datatype='table' name='[__tableau_internal_object_id__].[veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463]' role='measure' type='quantitative' />
       <column caption='Date' datatype='date' name='[date]' role='dimension' type='ordinal' />
       <column caption='Death' datatype='integer' name='[death]' role='measure' type='quantitative' />
       <column caption='Deathconfirmed' datatype='integer' name='[deathconfirmed]' role='measure' type='quantitative' />
       <column caption='Deathprobable' datatype='integer' name='[deathprobable]' role='measure' type='quantitative' />
-      <column caption='Density' datatype='real' name='[density]' role='measure' type='quantitative' />
-      <column caption='Economystateid' datatype='integer' name='[economystateid]' role='measure' type='quantitative' />
+      <column caption='Eventname' datatype='string' name='[eventname]' role='dimension' type='nominal' />
       <column caption='Geocodeid' datatype='integer' name='[geocodeid]' role='measure' type='quantitative' />
-      <column caption='Hasstayathomeorder' datatype='boolean' name='[hasstayathomeorder]' role='dimension' type='nominal' />
       <column caption='Hospitalizedcumulative' datatype='integer' name='[hospitalizedcumulative]' role='measure' type='quantitative' />
       <column caption='Hospitalizedcurrently' datatype='integer' name='[hospitalizedcurrently]' role='measure' type='quantitative' />
-      <column caption='Hospitalizedper100K' datatype='integer' name='[hospitalizedper100k]' role='measure' type='quantitative' />
       <column caption='Inicucumulative' datatype='integer' name='[inicucumulative]' role='measure' type='quantitative' />
       <column caption='Inicucurrently' datatype='integer' name='[inicucurrently]' role='measure' type='quantitative' />
       <column caption='Negative' datatype='integer' name='[negative]' role='measure' type='quantitative' />
@@ -619,26 +424,40 @@
       <column caption='Newtests' datatype='integer' name='[newtests]' role='measure' type='quantitative' />
       <column caption='Onventilatorcumulative' datatype='integer' name='[onventilatorcumulative]' role='measure' type='quantitative' />
       <column caption='Onventilatorcurrently' datatype='integer' name='[onventilatorcurrently]' role='measure' type='quantitative' />
-      <column caption='Openbusinesses' datatype='string' name='[openbusinesses]' role='dimension' type='nominal' />
-      <column caption='Percentageoftestingtarget' datatype='integer' name='[percentageoftestingtarget]' role='measure' type='quantitative' />
-      <column caption='Population' datatype='integer' name='[population]' role='measure' type='quantitative' />
       <column caption='Positive' datatype='integer' name='[positive]' role='measure' type='quantitative' />
       <column caption='Positiveincrease' datatype='integer' name='[positiveincrease]' role='measure' type='quantitative' />
       <column caption='Positivitytestrate' datatype='integer' name='[positivitytestrate]' role='measure' type='quantitative' />
       <column caption='Recovered' datatype='integer' name='[recovered]' role='measure' type='quantitative' />
       <column caption='State' datatype='string' name='[state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
-      <column caption='Stateabbr' datatype='string' name='[stateabbr]' role='dimension' type='nominal' />
-      <column caption='Stayathomeexpiredate' datatype='date' name='[stayathomeexpiredate]' role='dimension' type='ordinal' />
       <column caption='Totaltests' datatype='integer' name='[totaltests]' role='measure' type='quantitative' />
+      <column-instance column='[eventname]' derivation='None' name='[none:eventname:nk]' pivot='key' type='nominal' />
       <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:eventname:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;Easter&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
+              <bucket>&quot;Mother&apos;s Day&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;July 4th&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;Father&apos;s Day&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
       <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
         <objects>
-          <object caption='vcompletecoviddata' id='vcompletecoviddata_3F33911F449C4040A1B8741891E378C5'>
+          <object caption='veventrelatedcoviddata' id='veventrelatedcoviddata_D5F18BE7D7F048FE9FD5893D9A69E463'>
             <properties context=''>
-              <relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='vcompletecoviddata' table='[public].[vcompletecoviddata]' type='table' />
+              <relation connection='postgres.12kyp5g1xcbyex10a48wb1sxvwg4' name='veventrelatedcoviddata' table='[public].[veventrelatedcoviddata]' type='table' />
             </properties>
           </object>
         </objects>
@@ -825,6 +644,57 @@
       </table>
       <simple-id uuid='{F91FCE4C-B1DE-4BCF-A044-CA75F3D91DC8}' />
     </worksheet>
+    <worksheet name='Positivity Rate Based On Events'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='vlatestdatecoviddata (Covid19)' name='federated.0ddxqxa1kqxrvc18rlswq1dczgqd' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0ddxqxa1kqxrvc18rlswq1dczgqd'>
+            <column caption='Date' datatype='date' name='[date]' role='dimension' type='ordinal' />
+            <column caption='Eventname' datatype='string' name='[eventname]' role='dimension' type='nominal' />
+            <column-instance column='[date]' derivation='None' name='[none:date:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[eventname]' derivation='None' name='[none:eventname:nk]' pivot='key' type='nominal' />
+            <column-instance column='[state]' derivation='None' name='[none:state:nk]' pivot='key' type='nominal' />
+            <column caption='Positive' datatype='integer' name='[positive]' role='measure' type='quantitative' />
+            <column caption='State' datatype='string' name='[state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+            <column-instance column='[positive]' derivation='Sum' name='[sum:positive:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[date]' derivation='Day-Trunc' name='[tdy:date:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='quantitative' column='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:date:qk]' included-values='non-null' />
+          <filter class='categorical' column='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]'>
+            <groupfilter function='level-members' level='[none:eventname:nk]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]</column>
+            <column>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:date:qk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <encodings>
+              <color column='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]' />
+              <lod column='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:state:nk]</rows>
+        <cols>([federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[tdy:date:ok] * [federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[sum:positive:qk])</cols>
+      </table>
+      <simple-id uuid='{FDCC3289-46BA-4D2B-BCEC-A0ABBB6FB64A}' />
+    </worksheet>
     <worksheet name='Positivity Test Rate'>
       <table>
         <view>
@@ -997,7 +867,7 @@
       </viewpoint>
       <simple-id uuid='{0C581EC0-D699-45DF-8303-F4B5D871E7B0}' />
     </window>
-    <window class='worksheet' maximized='true' name='Hospitilized VS On Ventilators'>
+    <window class='worksheet' name='Hospitilized VS On Ventilators'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1032,6 +902,46 @@
         </highlight>
       </viewpoint>
       <simple-id uuid='{99CDA5C1-4BC8-421A-A291-70AB7260625C}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Positivity Rate Based On Events'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]' type='filter' />
+            <card pane-specification-id='2' param='[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:date:qk]</field>
+            <field>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:eventname:nk]</field>
+            <field>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[none:state:nk]</field>
+            <field>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[tdy:date:qk]</field>
+            <field>[federated.0ddxqxa1kqxrvc18rlswq1dczgqd].[yr:date:ok]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{66A23E09-8A8F-4631-8F82-ECEECE5B0431}' />
     </window>
   </windows>
   <thumbnails>
@@ -1757,6 +1667,271 @@
       h2YYmJ6cRDKZPOlbemPgAjBEGIaBv/vsU1ycPoN356/xmaAP8Cc4ROzu7SF3ZhLbro7VtbWT
       vp03Ai4AQ8T42BiMrT2cV7M4OzNz0rfzRsBVIM6phs8AnFMNFwDOqYYLAOdUwwWAc6rhAsA5
       1XAB4JxquABwTjVcADinGi4AnFONZFnWSd8Dh3Ni/H8M9nem7ex7bwAAAABJRU5ErkJggg==
+    </thumbnail>
+    <thumbnail height='192' name='Positivity Rate Based On Events' width='192'>
+      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
     </thumbnail>
     <thumbnail height='192' name='Positivity Test Rate' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAABJ0AAASdAHeZh94

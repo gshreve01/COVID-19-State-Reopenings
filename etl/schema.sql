@@ -435,6 +435,14 @@ ALTER TABLE ONLY public.eventdate
 ALTER TABLE ONLY public.statereopening
     ADD CONSTRAINT statereopening_geocodeid_fkey FOREIGN KEY (geocodeid) REFERENCES public.state(geocodeid);
 
+Create view vEventRelatedCovidData
+as
+select t3.eventname, t4.name as state, t1.*
+from dailydata t1
+join eventdate t2 on t2.eventdate = t1.date
+join event t3 on t2.eventid = t3.id
+join state t4 on t1.geocodeid = t4.geocodeid;
+
 
 -- Completed on 2020-07-20 21:37:57
 

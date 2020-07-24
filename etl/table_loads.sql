@@ -1,3 +1,10 @@
+\set localDirectory 'C:\\Development\\CovidProject2\\etl\data\\'
+
+COPY event(id,
+	eventname)
+FROM ':localDirectoryevent.csv' DELIMITER ',' CSV HEADER;
+
+
 -- Remove existing data and load
 delete from coronavirustesting;
 
@@ -13,8 +20,12 @@ delete from gradeeffdt;
 
 delete from State;
 
+delete from eventdate;
+
+delete from event;
+
 COPY State(GeoCodeId,Name,Abbreviation)
-FROM 'C:\Development\CovidProject2\etl\data\state.csv' DELIMITER ',' CSV HEADER;
+FROM ':localDirectorystate.csv' DELIMITER ',' CSV HEADER;
 
 COPY coronavirustesting(GeoCodeId,dailytestsper100k, percentageoftestingtarget,positivitytestrate,hospitalizedper100k)
 FROM 'C:\Development\CovidProject2\etl\data\currenttesting.clean.csv' DELIMITER ',' CSV HEADER;
@@ -56,6 +67,14 @@ copy dailydata(geocodeid
 ,newhospitalizations)
 FROM 'C:\Development\CovidProject2\etl\data\DailyData.csv' DELIMITER ',' CSV HEADER;
 
+COPY event(id,
+	eventname)
+FROM 'C:\\Development\\CovidProject2\\etl\data\\events.csv' DELIMITER ',' CSV HEADER;
+
+COPY event(id,
+	eventname)
+FROM 'C:\\Development\\CovidProject2\\etl\data\\events.csv' DELIMITER ',' CSV HEADER;
+
 select * from state;
 
 select * from coronavirustesting;
@@ -69,4 +88,8 @@ select * from statereopening;
 select * from dailydata;
 
 select * from gradeeffdt;
+
+select * from event;
+
+select * from eventdate;
 
