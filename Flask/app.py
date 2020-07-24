@@ -8,12 +8,13 @@ import getpass
 app = Flask(__name__)
 
 # Use flask_pymongo to set up mongo connection
-username = input("Enter your username: ")
-password = getpass.getpass("Enter your password: ")
+#TODO: Remove pre check-in
+# username = input("Enter your username: ")
+# password = getpass.getpass("Enter your password: ")
 
-# Use flask_pymongo to set up mongo connection
-SQLALCHEMY_DATABASE_URI = GetURIConfig(username, password)
-print(SQLALCHEMY_DATABASE_URI)
+# # Use flask_pymongo to set up mongo connection
+# SQLALCHEMY_DATABASE_URI = GetURIConfig(username, password)
+# print(SQLALCHEMY_DATABASE_URI)
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 accepted_data_points_map = [] 
@@ -29,11 +30,20 @@ accepted_data_points_map.append({"description": "In ICU Currently"
 accepted_data_points_map.append({"description": "On Ventilator Currently"
                                 , "name": "onventilatorcurrently"})
 
+@app.route("/home")
+def home():
+    return index()
+    
 @app.route("/")
 def index():
     index_data = {}
     index_data["most_changed"] = loadMostChangedState(engine)
     return render_template("index.html", index_data=index_data)
+
+@app.route("/Maps")
+def defaultMap():
+    return heatMap("positiveincrease")
+
 
 @app.route("/Maps/<dataPointName>")
 def heatMap(dataPointName):
@@ -57,6 +67,23 @@ def heatMap(dataPointName):
 def grades():
     grade_data = {}
     return render_template("bargraph.html")
+
+@app.route("/Dashboard1")
+def dashboard1():
+    return render_template("dashboard1.html")
+
+@app.route("/Dashboard2")
+def dashboard2():
+    return render_template("dashboard2.html")
+ 
+@app.route("/Dashboard3")
+def dashboard3():
+    return render_template("dashboard3.html")
+ 
+@app.route("/Dashboard4")
+def dashboard4():
+    return render_template("dashboard4.html")
+    
 
 if __name__ == "__main__":
     app.run()
