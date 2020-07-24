@@ -70,6 +70,8 @@ function renderAxes(newXScale, xAxis) {
 // function to make a bars of graph
 
 function createbar(first,sourcedata, cclass, chosenXAxis,color){
+
+
     if(chosenXAxis ==="Pos_Tests"){
         var diff = "NewPosCases"
     }
@@ -79,16 +81,35 @@ function createbar(first,sourcedata, cclass, chosenXAxis,color){
     var xLinearScale = xScale(sourcedata, chosenXAxis);
 
     var yOrdinalScale =yScale(sourcedata)
-    if(first === "N"){
+    if(first === "N")
+    {   
         console.log("erase")
-        var el = document.getElementById(cclass);
-        while (el.firstChild) {
-            console.log("remove")
-            el.removeChild(el.firstChild);
-        }
-    }
-    else{console.log("don't erase")}
-    obj = newGroup(cclass).selectAll("."+ cclass)
+        d3.selectAll("svg > *").remove();
+
+        addscat = document.getElementById("appendscatter")
+        addscat.append("div")
+                .attr("id","scatter")
+        var margin = {
+            top: 15,
+            right: 60,
+            bottom: 60,
+            left: 60
+        };
+        
+        var width = 960 - margin.left - margin.right,
+            height = 700 - margin.top - margin.bottom;
+        
+        var svg = d3.select("#scatter").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        // var el = document.getElementById(cclass);
+        // while (el.firstChild) {
+        //     console.log("remove")
+        //     el.removeChild(el.firstChild);
+        // }
+        obj = newGroup(cclass).selectAll("."+ cclass)
             .remove()
             .data(sourcedata)
             .enter()
@@ -109,7 +130,31 @@ function createbar(first,sourcedata, cclass, chosenXAxis,color){
                 }
                 
             });
-			
+        
+        }
+    else {console.log("don't erase")
+    var obj = newGroup(cclass).selectAll("."+ cclass)
+            .remove()
+            .data(sourcedata)
+            .enter()
+            .append("g")
+            .append("rect")
+            .attr("class","bar")
+            .attr("y", function(d){
+                return yOrdinalScale(d.State)
+            })
+            .attr("fill",color)
+            .attr("height", yOrdinalScale.rangeBand())
+            .attr("width",function(d){
+                if(cclass == "prevbars"){
+                    return xLinearScale(d[chosenXAxis]-d[diff])
+                }
+                else{
+                    return xLinearScale(d[chosenXAxis])
+                }
+                
+            });
+		}	
 	return obj
 }
 
