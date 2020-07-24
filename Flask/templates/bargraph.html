@@ -9,6 +9,7 @@
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <link rel="stylesheet" href="static/styles/style.css">
   <link rel="stylesheet" href="static/styles/d3Style.css">
+  <link rel="stylesheet" type="text/css" href="css/lightpick.css">
 
 </head>
 
@@ -29,17 +30,18 @@
             <div class="panel-body">
 
               <form>                
-                <h7>Select a State</h7>
+                <h7>Select the states you would like to view</h7>
                 <br>
                 <select id="stateSelect" size="8" multiple="multiple">
                   <option value="all" selected>ALL</option>
                 </select>
+                <input type="text" id="datepicker"/>
               </form>
             </div>
           </div>
         </aside>
       </div>
-      <div class="col-xs-12  col-md-9">
+      <div class="col-xs-12  col-md-9" id="appendscatter">
         <div id="scatter">
           <!-- We append our chart here. -->
         </div>
@@ -60,6 +62,11 @@
   <script type="text/javascript" src="../static/js/bargraphsfilters.js"></script>
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="lightpick.js"></script>
+  <script>
+      var picker = new Lightpick({ field: document.getElementById('datepicker') });
+  </script>
 </body>
 
 </html>
