@@ -30,7 +30,7 @@ var margin = {
 
 //declare the width and height of svg element
 var width = 960 - margin.left - margin.right;
-var height = 700 - margin.top - margin.bottom;
+var height = 650 - margin.top - margin.bottom;
 
 
 //Initial Params
