@@ -1,6 +1,26 @@
-console.log("Beginning BarGraphsDataRead");
 
-//set up svg using margin conventions - we'll need plenty of room on the left for labels
+
+var dateselected = ""
+var dateSel = new Litepicker({
+    element: document.getElementById('datepicker'),
+    startDate: "2020-07-21",
+    maxDate: "2020-07-21",
+    minDate: "2020-03-01",
+    onSelect: function (date1) {
+        dateselected = dateSel.getDate()
+        return dateselected
+    }
+
+})
+
+//filter the data
+function sortdata(data, param) {
+    data = data.sort(function (a, b) {
+        return d3.ascending(a[param], b[param])
+    })
+}
+
+//set up svg using margins
 var margin = {
     top: 15,
     right: 60,
@@ -8,55 +28,82 @@ var margin = {
     left: 60
 };
 
-var width = 960 - margin.left - margin.right,
-    height = 700 - margin.top - margin.bottom;
+//declare the width and height of svg element
+var width = 960 - margin.left - margin.right;
+var height = 700 - margin.top - margin.bottom;
 
-var svg = d3.select("#scatter").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// Append an SVG group
-function newGroup(groupid){
-    var chartGroup = svg.append("g")
-                        // .attr("transform", `translate(${margin.left}, ${margin.top})`)
-                        .attr("id",groupid)
-    return chartGroup
-}
-var chartGroup = svg.append("g")
-.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Initial Params
 var chosenXAxis = "Pos_Tests"
 
+
+//function to convert date object to appropriate string format
+function convert(str) {
+    var date = new Date(str),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+}
+
 // function used for updating x-scale var upon click on axis label
 function xScale(dailyData, chosenXAxis) {
     // create scales
+    console.log("daily", dailyData)
     console.log(dailyData[0][chosenXAxis])
     var xLinearScale = d3.scaleLinear()
         .range([0, width])
         .domain([0,
-        d3.max(dailyData, d => d[chosenXAxis]) 
+            d3.max(dailyData, d => d[chosenXAxis])
         ])
-        // .domain([0, d3.max(dailyData, function (d) {
-        //     return d[chosenXAxis];
-        // })]);
-        // console.log("xlinear")
-        // console.log(xLinearScale())
+    // .domain([0, d3.max(dailyData, function (d) {
+    //     return d[chosenXAxis];
+    // })]);
+    // console.log("xlinear")
+    // console.log(xLinearScale())
     return xLinearScale;
 }
 
 //function used for updating y-scale
-function yScale(fdata){
+function yScale(fdata) {
+    console.log("height", height)
     var yordscale = d3.scale.ordinal()
-    .rangeRoundBands([height, 0], .1)
-    .domain(fdata.map(function (d) {
-        return d.State;
-    }));
+        .rangeRoundBands([height, 0], .1)
+        .domain(fdata.map(function (d) {
+            return d.State;
+        }));
 
     return yordscale
 }
+
+//function to create x and y axis
+function createaxis(sourcedata, chosenXAxis) {
+    // xLinearScale function above csv import
+    var xLinearScale = xScale(sourcedata, chosenXAxis);
+
+    var yOrdinalScale = yScale(sourcedata);
+
+
+    // Create initial axis functions
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var yAxis = d3.axisLeft()
+        .scale(yOrdinalScale)
+
+    console.log(yOrdinalScale)
+    var xaxisheight = height - 27
+    console.log(xaxisheight)
+    //append x axis
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(-60, ${xaxisheight})`)
+        .call(bottomAxis);
+
+    chartGroup.append("g")
+        .attr("transform", function () {
+            return "translate(-60,-10)"
+        })
+        .call(yAxis);
+}
+
 // function used for updating xAxis var upon click on axis label
 function renderAxes(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
@@ -66,352 +113,229 @@ function renderAxes(newXScale, xAxis) {
         .call(bottomAxis);
 
     return xAxis;
+}
+var svg = ""
+var chartGroup = ""
+var xLabelsGroup = ""
+function removeSvg() {
+    var svgArea = d3.select("#scatter").select("svg")
+
+    if (!svgArea.empty()) {
+        console.log("removing svg")
+        svgArea.remove();
     }
+
+    svg = d3.select("#scatter").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    console.log("svg", svg)
+
+    chartGroup = svg.append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    console.log("chartgroup1", chartGroup)
+
+}
+//function to create listener to change data on axis click
+function xaxislistener(filteredData) {
+    xLabelsGroup.selectAll("text")
+        .on("click", function () {
+            console.log("active?")
+            // console.log(xLabelsGroup.selectAll("text").value())
+            // get value of selection
+            var value = d3.select(this).attr("value");
+
+            if (value !== chosenXAxis) {
+
+                // replaces chosenXAxis with value
+                chosenXAxis = value;
+                console.log("filtered", filteredData)
+                removeSvg();
+                var filteredd = filtermydata()
+                createbar(filteredd, "totalbar", chosenXAxis, "green");
+                createbar(filteredd, "prevbars", chosenXAxis, "red");
+                console.log("xlabels", xLabelsGroup)
+                xaxislistener(filteredd)
+
+            }
+        });
+}
+var button = d3.select("#filter-btn");
+console.log("button", button);
+button.on("click", function () {
+    removeSvg();
+    var filteredd = filtermydata()
+    createbar(filteredd, "totalbar", chosenXAxis, "green");
+    createbar(filteredd, "prevbars", chosenXAxis, "red");
+    console.log("xlabels", xLabelsGroup)
+    xaxislistener(filteredd)
+});
+
+
+console.log("chartgroup2", chartGroup)
 // function to make a bars of graph
 
-function createbar(first,sourcedata, cclass, chosenXAxis,color){
+function createbar(sourcedata, cclass, chosenXAxis, color) {
 
+    console.log("cclass", cclass)
+    console.log("sourcedata", sourcedata)
+    console.log("chosenXaxis", chosenXAxis)
+    //sort data
+    sortdata(sourcedata, chosenXAxis)
 
-    if(chosenXAxis ==="Pos_Tests"){
+    //select the appropriate daily associated with total
+    if (chosenXAxis === "Pos_Tests") {
         var diff = "NewPosCases"
     }
-    else{
+    else {
         var diff = "NewDeaths"
     }
+
+    createaxis(sourcedata, chosenXAxis)
     var xLinearScale = xScale(sourcedata, chosenXAxis);
 
-    var yOrdinalScale =yScale(sourcedata)
-    if(first === "N")
-    {   
-        console.log("erase")
-        d3.selectAll("svg > *").remove();
+    var yOrdinalScale = yScale(sourcedata);
 
-        addscat = document.getElementById("appendscatter")
-        addscat.append("div")
-                .attr("id","scatter")
-        var margin = {
-            top: 15,
-            right: 60,
-            bottom: 60,
-            left: 60
-        };
-        
-        var width = 960 - margin.left - margin.right,
-            height = 700 - margin.top - margin.bottom;
-        
-        var svg = d3.select("#scatter").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        // var el = document.getElementById(cclass);
-        // while (el.firstChild) {
-        //     console.log("remove")
-        //     el.removeChild(el.firstChild);
-        // }
-        obj = newGroup(cclass).selectAll("."+ cclass)
-            .remove()
-            .data(sourcedata)
-            .enter()
-            .append("g")
-            .append("rect")
-            .attr("class","bar")
-            .attr("y", function(d){
-                return yOrdinalScale(d.State)
-            })
-            .attr("fill",color)
-            .attr("height", yOrdinalScale.rangeBand())
-            .attr("width",function(d){
-                if(cclass == "prevbars"){
-                    return xLinearScale(d[chosenXAxis]-d[diff])
-                }
-                else{
-                    return xLinearScale(d[chosenXAxis])
-                }
-                
-            });
-        
-        }
-    else {console.log("don't erase")
-    var obj = newGroup(cclass).selectAll("."+ cclass)
-            .remove()
-            .data(sourcedata)
-            .enter()
-            .append("g")
-            .append("rect")
-            .attr("class","bar")
-            .attr("y", function(d){
-                return yOrdinalScale(d.State)
-            })
-            .attr("fill",color)
-            .attr("height", yOrdinalScale.rangeBand())
-            .attr("width",function(d){
-                if(cclass == "prevbars"){
-                    return xLinearScale(d[chosenXAxis]-d[diff])
-                }
-                else{
-                    return xLinearScale(d[chosenXAxis])
-                }
-                
-            });
-		}	
-	return obj
-}
-
-
-// function used for updating bar graphs group with a transition to
-// new bar
-function rendertotbars(totbars, newXScale, chosenXAxis) {
-
-    totbars.transition()
-    .duration(1000)
-    .attr("width", function(d) {
-        console.log(d[chosenXAxis])
-        console.log(newXScale(d[chosenXAxis]))
-        return newXScale(d[chosenXAxis])
-    })
-    
-    // d => newXScale(d[chosenXAxis]));
-
-    return totbars;
-}
-function renderprevbars(prevbars, newXScale, chosenXAxis) {
-    if(chosenXAxis ==="Pos_Tests"){
-        var diff = "NewPosCases"
-    }
-    else{
-        var diff = "NewDeaths"
-    }
-    prevbars.transition()
-    .duration(1000)
-    // .data(newdata)
-    .attr("width",d => newXScale(d[chosenXAxis]-d[diff]));
-
-    return prevbars;
-}
-
-
-console.log("d3");
-d3.csv("static/js/data/Covid19.csv").then(function(dailyData,err) {
-        if (err) throw err;
-        console.log(dailyData)
-        //Convert necessary string fields to integers
-        dailyData.forEach(function(data) {
-            data.Pos_Tests = +data.Pos_Tests;
-            data.Deaths = +data.Deaths;
-            data.income = +data.income;
-            data.healthcare = +data.healthcare
-            });
-
-        
-        var filteredData =dailyData.filter(days => days.Date === "2020-07-10")
-        console.log(filteredData[0])
-        
-        function sortdata(data,param){
-            data = data.sort(function(a,b){
-                return d3.ascending(a[param], b[param])
+    console.log("chartgroup", chartGroup)
+    var obj = svg.selectAll("." + cclass)
+        // obj = svg.selectAll
+        .data(sourcedata)
+        .enter()
+        .append("g")
+        .append("rect")
+        .attr("class", "bar")
+        .attr("y", function (d) {
+            return yOrdinalScale(d.State)
         })
-        }
-        //sort initial data
-        sortdata(filteredData,"Pos_Tests")
+        .attr("fill", color)
+        .attr("height", yOrdinalScale.rangeBand())
+        .attr("width", function (d) {
+            if (cclass == "prevbars") {
+                return xLinearScale(d[chosenXAxis] - d[diff])
+            }
+            else {
+                return xLinearScale(d[chosenXAxis])
+            }
 
-        console.log("organized filtered data")
-        console.log(filteredData)
+        });
 
-        //function to return unique values of a list
-        function uniqueValues(value, index, self){
-            return self.indexOf(value) === index
-        }
-        var sts = filteredData.map(d => d.State.toUpperCase()).filter(uniqueValues).sort();
-        console.log(sts)
-        //Create State selection drop down options
-        sts.forEach(function(c) {
-            var x = d3.select("#stateSelect");
-            x.append("option").text(c).attr("value", c);
-        })
-        var totalDeaths = filteredData.map(d => d.Deaths)
-        var newDeaths = filteredData.map(d => d.NewDeaths)
+    // Create group for two x-axis labels
+    xLabelsGroup = chartGroup.append("g")
+        .attr("transform", `translate(${width / 2}, ${height})`)
+        .attr("id", "xlabelsGroup");
 
-        
-
-        // xLinearScale function above csv import
-        var xLinearScale = xScale(filteredData, chosenXAxis);
-
-        var yOrdinalScale =yScale(filteredData)
-        
-        
-        
-        
-            
-        // Create initial axis functions
-        var bottomAxis = d3.axisBottom(xLinearScale);
-        var yAxis = d3.axisLeft()
-            .scale(yOrdinalScale)
-        
-        var xaxisheight = height -27
-        // append x axis
-        var xAxis = chartGroup.append("g")
-            .classed("x-axis", true)
-            .attr("transform", `translate(-60, ${xaxisheight})`)
-            .call(bottomAxis);    
-
-        chartGroup.append("g")
-            .attr("transform", function() {
-                return "translate(-60,-10)"
-            })
-            .call(yAxis);
-
-        console.log(totalDeaths)
-        // var totbars = svg.selectAll(".totalbar")
-        //     .data(filteredData)
-        //     .enter()
-        //     .append("g")
-        //     .append("rect")
-        //     .attr("class","bar")
-        //     .attr("y", function(d){
-        //         return yOrdinalScale(d.State)
-        //     })
-        //     .attr("height", yOrdinalScale.rangeBand())
-        //     .attr("width",function(d){
-        //         return xLinearScale(d.Pos_Tests)
-        //     });
-        createbar("Y",filteredData,"totalbar",chosenXAxis,"green")
-        createbar("Y",filteredData,"prevbars",chosenXAxis,"red")
-        // var prevbars = svg.selectAll('.'+hey )
-        //     .data(filteredData)
-        //     .enter()
-        //     .append("g")
-        //     .append("rect")
-        //     .attr("class","bar")
-        //     .attr("y", function(d){
-        //         return yOrdinalScale(d.State)
-        //     })
-        //     .attr("fill","red")
-        //     .attr("height", yOrdinalScale.rangeBand())
-        //     .attr("width",function(d){
-        //         return xLinearScale(d.Pos_Tests-d.NewPosCases)
-        //     });
-        
-        //Append initial total bars
-        // totbars
-        // //Append intial prior day total bars
-        // prevbars
-        // totbars.append("text")
-        //     .attr("class", "label")
-        //     .attr("y", yOrdinalScale.rangeBand())
-
-        //     .text(function(d){
-        //         return d.Pos_tests;
-        //     })
-        // bars.append("text")
-            // .attr("class", "label")
-            // //y position of the label is halfway down the bar
-            // .attr("y", function (d) {
-            //     return y(d.State) + y.rangeBand() / 2 + 4;
-            // })
-            // //x position is 3 pixels to the right of the bar
-            // .attr("x", function (d) {
-            //     return x(d.Pos_Tests) + 3;
-            // })
-            // .text(function (d) {
-            //     return d.Pos_Tests;
-            // });
-        // })
-
-
-        // Create group for two x-axis labels
-        var xLabelsGroup = chartGroup.append("g")
-        .attr("transform", `translate(${width / 2}, ${height})`);
-
-        var casesLabel = xLabelsGroup.append("text")
+    var casesLabel = xLabelsGroup.append("text")
         .attr("x", 0)
         .attr("y", 20)
         .attr("value", "Pos_Tests") // value to grab for event listener
         .classed("active", true)
-        .classed("inactive",false)
+        .classed("inactive", false)
         .text("Total Cases");
 
-        var deathsLabel = xLabelsGroup.append("text")
+    var deathsLabel = xLabelsGroup.append("text")
         .attr("x", 0)
         .attr("y", 40)
         .attr("value", "Deaths") // value to grab for event listener
         .classed("inactive", true)
-        .classed("active",false)
+        .classed("active", false)
         .text("Total Deaths");
-        
-        // x axis labels event listener
-        xLabelsGroup.selectAll("text")
-        .on("click", function() {
-            // get value of selection
-            var value = d3.select(this).attr("value");
-            if (value !== chosenXAxis) {
 
-            // replaces chosenXAxis with value
-            chosenXAxis = value;
+    console.log("xlabel", xLabelsGroup)
+    console.log("chosenXaxis", chosenXAxis)
+    if (chosenXAxis === "Pos_Tests") {
+        console.log("cases Bold")
+        casesLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        deathsLabel
+            .classed("active", false)
+            .classed("inactive", true);
+    }
+    else {
+        console.log("deaths bold")
+        casesLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        deathsLabel
+            .classed("active", true)
+            .classed("inactive", false);
+    }
 
-            console.log(chosenXAxis)
+}
 
-            // functions here found above csv import
-            // updates x scale for new data
-            xLinearScale = xScale(dailyData, chosenXAxis);
 
-            // updates x axis with transition
-            xAxis = renderAxes(xLinearScale, xAxis);
-                // console.log(totbars)
-                // console.log(xLinearScale)
-                // console.log(chosenXAxis)
-            // updates circles with new x values
-            // totbars = rendertotbars(totbars, xLinearScale, chosenXAxis);
-            createbar("N",filteredData,"totalbar",chosenXAxis,"blue")
-            // prevbars = renderprevbars(prevbars, xLinearScale, chosenXAxis);
-            createbar("N",filteredData,"prevbars",chosenXAxis,"red")  
-            // updates tooltips with new info
-            // totbars = updateToolTip(chosenXAxis,totbars);
 
-            // changes classes to change bold text
-            if (chosenXAxis === "Pos_Tests") {
-                console.log("cases Bold")
-                casesLabel
-                .classed("active", true)
-                .classed("inactive", false);
-                deathsLabel
-                .classed("active", false)
-                .classed("inactive", true);
-            }
-            else {
-                console.log("deaths bold")
-                casesLabel
-                .classed("active", false)
-                .classed("inactive", true);
-                deathsLabel
-                .classed("active", true)
-                .classed("inactive", false);
-                }
-            }
-        });
-        var stateselect = d3.select("#filter-btn")
-        stateselect.on("click", limitstates)
-        
-        function limitstates(){
-            var statessel = document.getElementById("stateSelect")
-            console.log(statessel[1])
-            chosensts = []
-            for(i = 0; i<statessel.length;i++){
-                currentoption = statessel[i]
-                console.log(currentoption)
-                if(currentoption.selected == true){
-                    console.log(currentoption.value)
-                    chosensts.push(currentoption.value)
-                }
-            }
-            console.log(chosensts)
 
-            console.log(chosensts)
-            filteredData = filteredData.filter(data => {
-                return chosensts.includes(data.State)
-            })
-            console.log(statefilter)
-            
-        }
-            
+
+
+//grab current info and return
+function filtermydata() {
+
+    var chosenDate = convert(dateSel.getDate().toString())
+    console.log("chosendate", chosenDate)
+
+    var filteredData = gdailyData.filter(days => days.Date === chosenDate);
+
+    //function to return unique values of a list
+    function uniqueValues(value, index, self) {
+        return self.indexOf(value) === index
+    }
+    var sts = filteredData.map(d => d.State.toUpperCase()).filter(uniqueValues).sort();
+    console.log(sts)
+    //Create State selection drop down options
+    sts.forEach(function (c) {
+        var x = d3.select("#stateSelect");
+        x.append("option").text(c).attr("value", c);
     })
+
+    var statessel = document.getElementById("stateSelect")
+
+    chosensts = []
+    for (i = 0; i < statessel.length; i++) {
+        currentoption = statessel[i]
+        // console.log(currentoption)
+        if (currentoption.selected == true) {
+            if (currentoption.value != "all") {
+                console.log(currentoption.value)
+                chosensts.push(currentoption.value)
+            }
+        }
+    }
+    console.log("chosen", chosensts)
+    if (chosensts.length != 0) {
+        filteredData = filteredData.filter(data => {
+            return chosensts.includes(data.State)
+        })
+    }
+
+    console.log("filtered", filteredData);
+    return filteredData;
+
+}
+
+
+var gdailyData = []
+d3.csv("static/js/data/Covid19.csv").then(function (dailyData, err) {
+    if (err) throw err;
+    console.log(dailyData)
+    //Convert necessary string fields to integers
+    dailyData.forEach(function (data) {
+        data.Pos_Tests = +data.Pos_Tests;
+        data.Deaths = +data.Deaths;
+        data.income = +data.income;
+        data.healthcare = +data.healthcare
+    });
+    gdailyData = dailyData
+
+    removeSvg();
+    var filteredd = filtermydata()
+    createbar(filteredd, "totalbar", chosenXAxis, "green");
+    createbar(filteredd, "prevbars", chosenXAxis, "red");
+    console.log("xlabels", xLabelsGroup)
+    xaxislistener(filteredd)
+});
+
+
+
+
