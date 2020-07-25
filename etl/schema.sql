@@ -1,31 +1,6 @@
---
--- PostgreSQL database dump
---
+-- MAKE SURE TO CREATE A DB called "COVID19"
 
--- Dumped from database version 12.3
--- Dumped by pg_dump version 12.3
 
--- Started on 2020-07-20 21:37:57
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- TOC entry 208 (class 1259 OID 16536)
--- Name: censusdata; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.censusdata (
     geocodeid integer NOT NULL,
