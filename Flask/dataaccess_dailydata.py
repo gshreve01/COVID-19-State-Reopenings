@@ -9,7 +9,7 @@ import pandas as pd
 def loadMostChangedState(engine):
     # This should be put in separate file
     statement = """\
-select s.Name, t1.*
+select s.Name, t1.*, ro.stayathomestartdate, ro.stayathomeexpiredate, ro.state as economystate
 from dailydata t1
 join (
 select max(positiveincrease) as PositiveIncrease, max(date) as MaxDate
@@ -19,7 +19,8 @@ where date = (
 	from dailydata
 )
 ) t2 on t1.positiveincrease = t2.positiveincrease
-join state s on s.geocodeid = t1.geocodeid"""
+join state s on s.geocodeid = t1.geocodeid
+join vstatereopening ro on ro.name = s.name"""
     print(statement)
 
     with engine.connect() as conn:

@@ -9,11 +9,11 @@ app = Flask(__name__)
 
 # Use flask_pymongo to set up mongo connection
 #TODO: Remove pre check-in
-username = input("Enter your username: ")
-password = getpass.getpass("Enter your password: ")
+# username = input("Enter your username: ")
+# password = getpass.getpass("Enter your password: ")
 
-# Use flask_pymongo to set up mongo connection
-SQLALCHEMY_DATABASE_URI = GetURIConfig(username, password)
+# # Use flask_pymongo to set up mongo connection
+# SQLALCHEMY_DATABASE_URI = GetURIConfig(username, password)
 # print(SQLALCHEMY_DATABASE_URI)
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
